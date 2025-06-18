@@ -81,4 +81,31 @@
 
     // Expose removeCountdown globally
     window.removeCountdown = removeCountdown;
+
+const funColors = [
+  "#FFD700", // Gold
+  "#FF69B4", // Hot Pink
+  "#40E0D0", // Turquoise
+  "#98FB98", // Pale Green
+  "#FFA500", // Orange
+  "#00BFFF", // Deep Sky Blue
+  "#FF6347", // Tomato
+  "#BA55D3", // Medium Orchid
+  "#F08080", // Light Coral
+  "#7FFFD4"  // Aquamarine
+];
+function renderCountdowns() {
+  const container = document.getElementById('countdowns');
+  container.innerHTML = '';
+  countdowns.forEach((cd, idx) => {
+    const targetDate = typeof cd.date === 'function' ? cd.date() : cd.date;
+    const { years, months, days, hours, minutes, seconds } = getTimeRemaining(targetDate);
+    const div = document.createElement('div');
+    div.className = 'countdown';
+    div.style.backgroundColor = funColors[idx % funColors.length]; // Assign color
+    div.innerHTML = <span class="label">${cd.label}:</span>        ${years}y ${months}m ${days}d ${hours}h ${minutes}m ${seconds}s       <button onclick="removeCountdown(${idx})">Remove</button>;
+    container.appendChild(div);
+  });
+}
+
   </script>
