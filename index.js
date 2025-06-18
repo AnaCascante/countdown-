@@ -1,39 +1,11 @@
 const funColors = [
-  "#FFD700", // Gold
-  "#FF69B4", // Hot Pink
-  "#40E0D0", // Turquoise
-  "#98FB98", // Pale Green
-  "#FFA500", // Orange
-  "#00BFFF", // Deep Sky Blue
-  "#FF6347", // Tomato
-  "#BA55D3", // Medium Orchid
-  "#F08080", // Light Coral
-  "#7FFFD4"  // Aquamarine
+  "#FFD700", "#FF69B4", "#40E0D0", "#98FB98", "#FFA500",
+  "#00BFFF", "#FF6347", "#BA55D3", "#F08080", "#7FFFD4"
 ];
-// Predefined countdowns
+// Start with some predefined countdowns, or leave empty if you only want custom
 const countdowns = [
   { label: 'Christmas', date: new Date('2025-12-25T00:00:00') },
-  { label: 'New Year', date: new Date('2026-01-01T00:00:00') },
-  { label: 'Next Weekend', get date() {
-      const now = new Date();
-      const day = now.getDay();
-      const daysUntilSaturday = (6 - day + 7) % 7 || 7;
-      const nextSaturday = new Date(now);
-      nextSaturday.setDate(now.getDate() + daysUntilSaturday);
-      nextSaturday.setHours(0, 0, 0, 0);
-      return nextSaturday;
-    }
-  },
-  { label: 'End of Workday', get date() {
-      const now = new Date();
-      const end = new Date(now);
-      end.setHours(17, 0, 0, 0); // Set your end of workday hour here
-      if (now > end) {
-        end.setDate(end.getDate() + 1);
-      }
-      return end;
-    }
-  }
+  { label: 'New Year', date: new Date('2026-01-01T00:00:00') }
 ];
 function getTimeRemaining(target) {
   const now = new Date();
@@ -51,7 +23,7 @@ function renderCountdowns() {
   const container = document.getElementById('countdowns');
   container.innerHTML = '';
   countdowns.forEach((cd, idx) => {
-    const targetDate = typeof cd.date === 'function' ? cd.date() : cd.date;
+    const targetDate = cd.date;
     const { years, months, days, hours, minutes, seconds } = getTimeRemaining(targetDate);
     const div = document.createElement('div');
     div.className = 'countdown';
@@ -60,16 +32,19 @@ function renderCountdowns() {
     container.appendChild(div);
   });
 }
-// Remove countdown function must be globally available
 window.removeCountdown = function(idx) {
   countdowns.splice(idx, 1);
   renderCountdowns();
 }
-// Add custom countdown
 document.getElementById('addCountdownForm').addEventListener('submit', function(e) {
   e.preventDefault();
-  const label = document.getElementById('customLabel').value;
-  const date = new Date(document.getElementById('customDate').value);
+  const label = document.getElementById('customLabel').value.trim();
+  const dateValue = document.getElementById('customDate').value;
+  if (!dateValue) {
+    alert('Please enter a date/time!');
+    return;
+  }
+  const date = new Date(dateValue);
   if (date > new Date()) {
     countdowns.push({ label, date });
     renderCountdowns();
@@ -78,6 +53,5 @@ document.getElementById('addCountdownForm').addEventListener('submit', function(
     alert('Please select a future date/time!');
   }
 });
-// Update countdowns every second
 setInterval(renderCountdowns, 1000);
 renderCountdowns();
