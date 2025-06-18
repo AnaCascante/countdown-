@@ -2,7 +2,6 @@ const funColors = [
   "#FFD700", "#FF69B4", "#40E0D0", "#98FB98", "#FFA500",
   "#00BFFF", "#FF6347", "#BA55D3", "#F08080", "#7FFFD4"
 ];
-// Start with some predefined countdowns, or leave empty if you only want custom
 const countdowns = [
   { label: 'Christmas', date: new Date('2025-12-25T00:00:00') },
   { label: 'New Year', date: new Date('2026-01-01T00:00:00') }
