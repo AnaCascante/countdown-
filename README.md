@@ -1,5 +1,5 @@
 # countdown-
-This is a count down for the rest of my studies, finishing in June! 🥳
+This is a count down page, to add several countdowns. Still not finished
 
 
 # Netlify:
